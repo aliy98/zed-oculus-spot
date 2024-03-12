@@ -52,7 +52,7 @@ class Controller:
     
         return touch_controls
     
-    def get_hmd_controlls(self, errors):
+    def get_hmd_controls(self, errors):
         hmd_controls = []
         hmd_controls.append(self._pid_ang_z(errors[0]))
         hmd_controls.append(self._pid_ang_y(errors[1]))
