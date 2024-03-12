@@ -57,7 +57,7 @@ def main():
             touch_setpoints = setpoints[3:6]
             spot_measures = spot.get_body_vel()
             hmd_errors = [a - b for a, b in zip(spot_measures, hmd_setpoints)]
-            hmd_controls = controller.get_hmd_controlls(hmd_errors)
+            hmd_controls = controller.get_hmd_controls(hmd_errors)
             touch_controls = controller.get_touch_controls(touch_setpoints)
             controls = hmd_controls + touch_controls
             # get_log(hmd_setpoints[0], hmd_setpoints[1], touch_controls[0], touch_controls[1], touch_controls[2])
