@@ -3,7 +3,7 @@
 **Authors:** 
   - Ali Yousefi, ali.yousefi@edu.unige.it
   - Zoe Betta, zoe.betta@edu.unige.it
-  - Giovanni, Mottola, giovanni.mottola@unige.it
+  - Giovanni Mottola, giovanni.mottola@unige.it
   - Carmine Tommaso Recchiuto, carmine.recchiuto@unige.it
   - Antonio Sgorbissa, antonio.sgorbissa@unige.it
     
