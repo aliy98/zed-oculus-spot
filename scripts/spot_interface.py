@@ -96,10 +96,9 @@ class SpotInterface:
                                                     disable_vision_foot_obstacle_body_assist= False,
                                                     disable_vision_negative_obstacles=False,
                                                     obstacle_avoidance_padding=0.1)
-        if self._v_x == 0 and self._v_y == 0 and self._v_rot == 0:
-            footprint_R_body = geometry.EulerZXY(roll=self._roll, pitch=self._pitch, yaw=self._yaw)
-        else:
-            footprint_R_body = geometry.EulerZXY(roll=0.0, pitch=self._pitch, yaw=0.0)
+        if self._v_x != 0 or self._v_y != 0 or self._v_rot != 0:
+            self._yaw = 0
+        footprint_R_body = geometry.EulerZXY(roll=0.0, pitch=self._pitch, yaw=self._yaw)
         position = geometry_pb2.Vec3(x=0.0, y=0.0, z=0.0)
         rotation = footprint_R_body.to_quaternion()
         pose = geometry_pb2.SE3Pose(position=position, rotation=rotation)
