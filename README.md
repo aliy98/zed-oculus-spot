@@ -37,7 +37,7 @@ A Wi-Fi bridge could be implemented on the Raspberry Pi board using this [tutori
 
 |        Component       |              IP Address            |
 | ---------------------- | ---------------------------------- |
-| Raspberry Pi 4 Model B |        192.168.220.1 (Server)      |
+| Raspberry Pi 4 Model B |        192.168.220.1 (Server - Ethernet and Wireless)      |
 |     Jetson Nano        | 192.168.220.50 (Client - Ethernet) |
 |        OMEN PC         |   10.42.0.210 (Client - Wireless)  |
 |       Spot Robot       |   10.42.0.211 (Client - Wireless)  |
