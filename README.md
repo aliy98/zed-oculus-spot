@@ -5,7 +5,7 @@ This work describes an immersive control system for a quadruped robot designed t
   - Ali Yousefi, ali.yousefi@edu.unige.it
   - Zoe Betta, zoe.betta@edu.unige.it
   - Giovanni Mottola, giovanni.mottola@unige.it
-  - Carmine Tommaso Recchiuto, carmine.recchiuto@unige.it
+  - Carmine Tommaso Recchiuto, carmine.recchiuto@dibris.unige.it
   - Antonio Sgorbissa, antonio.sgorbissa@unige.it
     
 ©2024 RICE Lab - DIBRIS, University of Genova
