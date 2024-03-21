@@ -1,22 +1,24 @@
-///////////////////////////////////////////////////////////////////////////
-//
-// Copyright (c) 2018, STEREOLABS.
-//
-// All rights reserved.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-///////////////////////////////////////////////////////////////////////////
+/**
+ * @file main.cpp
+ * @brief This node implements a passthrough from the ZED2 stereo camera to Meta Quest 2.
+ *
+ * @author Ali Yousefi
+ * Contact: ali.yousefi@edu.unige.it
+ * 
+ * @details
+ * 
+ * 
+ * Description:
+ * 
+ *  This is a modified version of the software available on zed-oculus from Stereolabs repository. Since the IMU and touch input data
+ *  is required for this work, the main.cpp is modified in such a way that it reads the angular velocities, 
+ *  and touch input data using ts.HeadPose.AngularVelocity, InputState.Thumbstick[ovrHand_Right], and 
+ *  InputState.Thumbstick[ovrHand_Left] class attributes, and sends them to the process executed by main.py. 
+ *  Additionally, considering the fact that the ZED camera is not connected to the user PC with a USB cable, 
+ *  another modification is done, in order to open the ZED camera from the socket input, 
+ *  by changing the init_paramters values in zed.open(init_parameters).
+ */
+
 
 /**********************************
  ** Using the ZED with Oculus Rift
