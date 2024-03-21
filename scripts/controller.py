@@ -1,3 +1,13 @@
+#!/usr/bin/env python
+"""
+.. module:: controller
+    :platform: Windows
+    :synopsis: The controller python script in ``zed-oculus-spot`` package
+
+.. moduleauthor:: Ali Yousefi <ali.yousefi@edu.unige.it>
+	Provides a simple closed-loop controller for the head tracking task using the ``simple-pid`` python module with the method ``get_hmd_controls(setpoints)``. 
+    Additionally, computes the locomotion control signals based on the touch input reference signals with the method ``get_touch_controls(setpoints)``.
+"""
 from simple_pid import PID
 
 INPUT_TRESHOLD = 0.5
@@ -6,6 +16,9 @@ VELOCITY_BASE_ANGULAR = 0.8 # m/s
 MAX_ANG_VEL = 0.8 # rad/s
 
 class Controller:
+    """
+        Defines the controller gain variables. Provides the required methods for the HMD and touch controllers.
+    """
     def __init__(self):
         self._kp_ang = 1
         self._ki_ang = 0
@@ -25,6 +38,16 @@ class Controller:
 
 
     def get_touch_controls(self, setpoints):
+        """
+            Computes the touch control signals by checking the touch input values. The control signals will be constant velocities in the case if 
+            the touch inputs have passed the defined dead-zones.
+
+            Args:
+                setpoints([float])
+            
+            Returns:
+                touch_controls([float])
+        """
         touch_controls = []
         if abs(setpoints[0]) > INPUT_TRESHOLD:
             if setpoints[0] > 0:
@@ -53,6 +76,16 @@ class Controller:
         return touch_controls
     
     def get_hmd_controls(self, errors):
+        """
+            Computes the HMD control signals by checking the errors between the HMD and robot IMU values. The control signals will be computed based on the 
+            closed-loop system gain values.
+
+            Args:
+                setpoints([float])
+            
+            Returns:
+                hmd_controls([float])
+        """
         hmd_controls = []
         hmd_controls.append(self._pid_ang_z(errors[0]))
         hmd_controls.append(self._pid_ang_y(errors[1]))

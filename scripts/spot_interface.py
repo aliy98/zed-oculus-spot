@@ -1,3 +1,13 @@
+#!/usr/bin/env python
+"""
+.. module:: spot_interface
+    :platform: Windows
+    :synopsis: The spot_interface python script in ``zed-oculus-spot`` package
+
+.. moduleauthor:: Ali Yousefi <ali.yousefi@edu.unige.it>
+	Initializes the required service clients. Provides the required method for sending the control 
+    signals to the robot, and receving robot angular velocities.
+"""
 import logging
 import time
 
@@ -39,6 +49,10 @@ ROTATION_ANGLE = {
 
 
 class SpotInterface:
+    """
+        Defines the Lease, eStop, Power, RobotState, and RobotCommand clients. Provides the required method for sending the control 
+        signals to the robot ``set_controls(controls, dt)``, and receving robot angular velocities ``get_body_vel()``.
+    """
     def __init__(self):
         self._roll = 0.0
         self._pitch = 0.0
@@ -69,7 +83,9 @@ class SpotInterface:
         
     
     def _toggle_estop(self):
-        """toggle estop on/off. Initial state is ON"""
+        """
+            Toggle estop on/off. Initial state is ON.
+        """
         if self._estop_client is not None and self._estop_endpoint is not None:
             if not self._estop_keepalive:
                 self._estop_keepalive = EstopKeepAlive(self._estop_endpoint)
@@ -80,16 +96,40 @@ class SpotInterface:
                 self._estop_keepalive = None
         
     def _orientation_cmd_helper(self, yaw=0.0, roll=0.0, pitch=0.0, height=0.0):
+        """
+            A helper function to set the robot attitude and height values.
+            
+            Args:
+                yaw(float)
+                roll(float)
+                pitch(float)
+                height(float)
+        """
         orientation = geometry.EulerZXY(yaw, roll, pitch)
         cmd = RobotCommandBuilder.synchro_stand_command(body_height=height, footprint_R_body=orientation)
         self._robot_command_client.robot_command(lease=None, command=cmd, end_time_secs=time.time() + VELOCITY_CMD_DURATION)
 
     def _velocity_cmd_helper(self, v_x=0.0, v_y=0.0, v_rot=0.0):
+        """
+            A helper function to set the velocity values generated from the locomotion.
+            
+            Args:
+                v_x(float)
+                v_y(float)
+                v_rot(float)
+        """
         mobility_params = self._set_mobility_params()
         cmd = RobotCommandBuilder.synchro_velocity_command(v_x=v_x, v_y=v_y, v_rot=v_rot, params=mobility_params)
         self._robot_command_client.robot_command(lease=None, command=cmd, end_time_secs=time.time() + VELOCITY_CMD_DURATION)
         
     def _set_mobility_params(self):
+        """
+            Sets the required mobility parameters, including the obstacle avoidance, velocity limits, orientation offset between the robot 
+            and footprint frames.
+
+            Returns:
+                mobility_params(spot_command_pb2.MobilityParams)
+        """
         obstacles = spot_command_pb2.ObstacleParams(disable_vision_body_obstacle_avoidance=False,
                                                     disable_vision_foot_obstacle_avoidance=False,
                                                     disable_vision_foot_constraint_avoidance=False,
@@ -110,12 +150,25 @@ class SpotInterface:
         return mobility_params
     
     def get_body_vel(self):
+        """
+            Provides the angular velocity values of the robot base frame.
+
+            Returns:
+                measures([float])
+        """
         robot_state = self._robot_state_client.get_robot_state()
         vis_vel_ang = robot_state.kinematic_state.velocity_of_body_in_vision.angular
         measures = [vis_vel_ang.z, vis_vel_ang.y, vis_vel_ang.x]
         return measures
 
     def set_controls(self, controls, dt):
+        """
+            Sets the computed control signals on the robot base frame, using ``_velocity_cmd_helper()`` function.
+
+            Args:
+                controls([float])
+                dt(float)
+        """
         dyaw = controls[0] * dt
         dpitch = controls[1] * dt
         #droll = controls[2] * dt
@@ -134,6 +187,9 @@ class SpotInterface:
         self._velocity_cmd_helper(v_x=self._v_x, v_y=self._v_y, v_rot=self._v_rot)
         
     def _start(self):
+        """
+            Takes the lease of the robot, powers on the motors, and makes the robot stand up (the parts for the image service client are commented since we did not use them).
+        """
         # self._image_sources = ['frontleft_fisheye_image', 'frontright_fisheye_image']
         # self._image_requests = [build_image_request(source, quality_percent=50, resize_ratio=1) for source in self._image_sources]
         # for image_source in self._image_sources:
@@ -153,6 +209,9 @@ class SpotInterface:
         LOGGER.info("ready to take commands")
 
     def shutdown(self):
+        """
+            Makes the robot to be configured with no orientation offsets, sit down, and powers off the motors.
+        """
         self._orientation_cmd_helper(roll=0.0, pitch=0.0, yaw=0.0)
         time.sleep(5)
         blocking_sit(self._robot_command_client)
@@ -169,7 +228,9 @@ class SpotInterface:
             self._lease_keepalive.shutdown()
 
     def _image_to_opencv(self, image, auto_rotate=True):
-        """Convert an image proto message to an openCV image."""
+        """
+            Convert an image proto message to an openCV image (not used in our case, we used the ZED2 stereo camera).
+        """
         num_channels = 1  # Assume a default of 1 byte encodings.
         if image.shot.image.pixel_format == image_pb2.Image.PIXEL_FORMAT_DEPTH_U16:
             dtype = np.uint16
@@ -205,12 +266,23 @@ class SpotInterface:
 
 
     def _reset_image_client(self):
-        """Recreate the ImageClient from the robot object."""
+        """
+            Recreate the ImageClient from the robot object (not used in our case, we used the ZED2 stereo camera).
+        """
         del self._robot.service_clients_by_name['image']
         del self._robot.channels_by_authority['api.spot.robot']
         return self._robot.ensure_client('image')
     
     def get_image(self, image_timeout_count):
+        """
+            Provides a visual feedback from the robot front cameras (not used in our case, we used the ZED2 stereo camera).
+
+            Args:
+                image_timeout_count(int)
+
+            Returns:
+                timeout_count_before_reset(int)
+        """
         timeout_count_before_reset = image_timeout_count
         try:
             images_future = self._image_client.get_image_async(self._image_requests, timeout=0.5)

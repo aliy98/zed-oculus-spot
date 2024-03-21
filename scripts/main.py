@@ -1,3 +1,17 @@
+#!/usr/bin/env python
+"""
+.. module:: main
+    :platform: Windows
+    :synopsis: The main python script in ``zed-oculus-spot`` package
+
+.. moduleauthor:: Ali Yousefi <ali.yousefi@edu.unige.it>
+
+	Gets executed by the main.cpp`` file. Uses the ``SpotInterface`` and ``Controller`` classes methods for the headtracking and locomotion tasks.
+
+    Uses named pipe:
+        MyPipe
+
+"""
 import os
 import time
 import struct
@@ -5,6 +19,16 @@ from spot_interface import SpotInterface
 from controller import Controller
 
 def get_log(omega_z, omega_y, v_x, v_y, v_rot):
+    """
+        In case that is required, uncomment it to get a log of the head tracking task results on terminal.
+
+        Args:
+                omega_z([float])
+                omega_y([float])
+                v_x([float])
+                v_y([float])
+                v_rot([float])
+    """
     if omega_y > 0.05:
         if abs(omega_z) < 0.05:
             print("facing down")
@@ -40,6 +64,12 @@ def get_log(omega_z, omega_y, v_x, v_y, v_rot):
 
 
 def main():
+    """
+        The main function of the head tracking and locomotion task. Uses the named pipe ``MyPipe`` to get IMU data from the HMD, 
+        and the ``get_body_vel()`` to get IMU data from the robot. In the main loop the control signals are computed using the 
+        methods of ``Controller`` class, and sent to the robot using the ``SpotInterface`` class.
+
+    """
     pipe_path = r'\\.\pipe\MyPipe'
     pipe = open(pipe_path, 'rb')
     spot = SpotInterface()
