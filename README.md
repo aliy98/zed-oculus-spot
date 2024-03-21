@@ -1,14 +1,6 @@
 ## Immersive control of a quadruped robot with Virtual Reality Eye-wear
 This work describes an immersive control system for a quadruped robot, designed to track the head movements of
-the operator wearing a virtual reality eye-wear, while also utilizing joystick commands for locomotion control. The
-article details the implemented closed-loop velocity control approach, and the locomotion task specifications.
-The proposed method has been implemented on Spot robot from Boston Dynamics, with Meta Quest 2 virtual reality system.
-Evaluation of the approach involved a user study, where participants engaged in immersive control of the quadruped
-robot within an indoor experimental environment and provided feedback through standardized questionnaires.
-Pairwise comparison of the resulting data revealed significant advantages for the proposed immersive control
-system over a standard remote controller, with enhanced performance observed in the second trial of using the
-control system. However, participants lacking experience with virtual reality systems reported increased distress
-symptoms following the experiment. 
+the operator wearing a virtual reality eye-wear, while also utilizing joystick commands for locomotion control. 
 
 **Authors:** 
   - Ali Yousefi, ali.yousefi@edu.unige.it
