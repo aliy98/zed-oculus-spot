@@ -71,3 +71,6 @@ Download the sample and follow the instructions below: More
     ./ZED_Streaming_Receiver <ip:port>
 ```
 Once it is executed, the stereo passthourgh from ZED camera to Oculus starts. Moreover, it will automatically run the ``main.py`` script, that provides the control system and iterface with the robot.
+
+### System hypothesis and future work
+For future work, we aim to address the limitations of the current study. This includes implementing a more efficient communication system to control the robot from greater distances, and ensuring a comparable field of view between the HMD and the tablet-based controller.
