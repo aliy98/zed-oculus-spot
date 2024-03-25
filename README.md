@@ -1,5 +1,5 @@
 ## Immersive control of a quadruped robot with Virtual Reality Eye-wear
-This work describes an immersive control system for the Spot robot by Bsoton Dynamics, designed to track the head movements of
+This work describes an immersive control system for the Spot robot by Boston Dynamics, designed to track the head movements of
 the operator wearing the Meta Quest 2, while also utilizing joystick commands for locomotion control. 
 
 **Authors:** 
