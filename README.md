@@ -11,9 +11,20 @@ the operator wearing the Meta Quest 2, while also utilizing joystick commands fo
     
 ©2024 RICE Lab - DIBRIS, University of Genova
 <p align="left">
-<img src="https://github.com/aliy98/zed-oculus-spot/assets/65722399/6e9d73eb-292f-40a0-b181-d8918b1fa0ad" width="150" title="rice_logo">
+<img src="https://github.com/user-attachments/assets/0fdac2aa-7100-4caa-9191-df72cb55c8be" width="150" title="rice_logo">
 </p>
 
+
+If you use this work in an academic context, please cite:
+```
+@inproceedings{Yousefi2024zedoculusspot,
+  title={Immersive control of a quadruped robot with Virtual Reality Eye-Wear},
+  DOI={10.1109/ro-man60168.2024.10731469},
+  author={Yousefi, Ali and Betta, Zoe and Mottola, Giovanni and Recchiuto, Carmine Tommaso and Sgorbissa, Antonio},
+  booktitle={2024 33rd IEEE International Conference on Robot and Human Interactive Communication (ROMAN)},
+  year={2024}
+}
+```
 
 ### Package Description
 This repository provides a modified version of the software available on [zed-oculus](https://github.com/stereolabs/zed-oculus). Since the IMU and touch input data is required for this work, the ``main.cpp`` is modified in such a way that it reads the angular velocities, and touch input data using ``ts.HeadPose.AngularVelocity``, ``InputState.Thumbstick[ovrHand_Right]``, and ``InputState.Thumbstick[ovrHand_Left]``  class attributes, and sends them to the process executed by ``main.py``. Additionally, considering the fact that the ZED camera is not connected to the user PC with a USB cable, another modification is done in ``main.cpp`` file, in order to open the ZED camera from the socket input, by changing the ``init_paramters`` values in ``zed.open(init_parameters)`` same as the method [HERE](https://github.com/stereolabs/zed-sdk/tree/master/camera%20streaming/receiver/cpp).
